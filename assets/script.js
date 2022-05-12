@@ -5,6 +5,7 @@ var weatherAPIkey = "94ebea31571843c6c5e0f41fe628959f";
 // Global variables
 var search = document.querySelector("#search");
 var userinput = document.querySelector("#city");
+var stuff = document.querySelector("#stuff");
 
 // Search button
 search.addEventListener('submit', cityinput);
@@ -33,11 +34,10 @@ function convert() {
         })
 }
 
-//
+// Function to take latitude and longitude data from geocode and make another request to grab weather data at that location
 function weather(geodata) {
     var lat = geodata[0].lat;
     var lon = geodata[0].lon;
-    var city = geodata[0].name;
     var weather = `${weatherAPIbaseURL}/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${weatherAPIkey}`;
 
     fetch(weather)
@@ -46,5 +46,17 @@ function weather(geodata) {
         })
         .then(function (weatherdata) {
             console.log(weatherdata)
+            appenddata(weatherdata)
         })
+}
+
+function appenddata(weatherdata) {
+    var humidity = weatherdata.current.humidity
+    var temp = weatherdata.current.temp
+
+    console.log(humidity)
+    console.log(temp)
+
+    stuff.innerHTML = humidity
+    stuff.innerHTML = temp
 }
