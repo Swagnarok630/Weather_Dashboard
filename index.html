@@ -9,16 +9,118 @@
 </head>
 
 <body>
-     <h1>Quirky Title Goes Here</h1>
+    <!-- App title -->
+    <header>
+        <h1>Weather or Not</h1>
+    </header>
+    
+    <!-- Search bar and theme selector -->
+    <section class="searchandtheme">
 
-     <form id="search">
-        <label for="city">Enter a city:</label><br>
-        <input type="text" id="city" name="city"><br>
-        <button type="submit">Search</button>
+        <!-- Search bar form -->
+        <div class="searchbar">
+            <form id="search">
+                <label for="city">Enter a city:</label>
+                <input type="text" id="city" name="city">
+                <button type="submit">Search</button>
+            </form>
+        </div>
 
-     </form>
+        <!-- Theme selector buttons -->
+        <div class="themeselect">
+            <input type="radio" id="P3" name="P3" value="P3">
+            <label for="P3">Midnight</label>
+            <input type="radio" id="P4" name="P4" value="P4">
+            <label for="P4">Daylight</label>
+            <input type="radio" id="P5" name="P5" value="P5">
+            <label for="P5">Twilight</label>
+        </div>
+    </section>
 
-     <p id="stuff"></p>
+    <!-- History list to track up to the last ten cities the user has searched -->
+    <section class="history">
+        <div class="historybuttons">
+            <input type="radio">
+            <label>test something</label>
+            <input type="radio">
+            <label>test something</label>
+            <input type="radio">
+            <label>test something</label>
+            <input type="radio">
+            <label>test something</label>
+            <input type="radio">
+            <label>test something</label>
+            <input type="radio">
+            <label>test something</label>
+            <input type="radio">
+            <label>test something</label>
+            <input type="radio">
+            <label>test something</label>
+            <input type="radio">
+            <label>test something</label>
+            <input type="radio">
+            <label>test something</label>
+        </div>
+    </section>
+
+    <!-- Main weather card and a random useless fact -->
+    <section class="maincard">
+        <div class="currentweather">
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+        </div>
+
+        <div class="randomfact">
+            <p>quote goes here</p>
+        </div>
+    </section>
+
+    <!-- Five day forecast -->
+    <section class="forecast">
+        <div class="forecard future1">
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+        </div>
+
+        <div class="forecard future2">
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+        </div>
+
+        <div class="forecard future3">
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+        </div>
+
+        <div class="forecard future4">
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+        </div>
+
+        <div class="forecard future5">
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+            <p>some filler</p>
+        </div>
+    </section>
+
     <script src="./assets/script.js"></script>
 </body>
 </html>

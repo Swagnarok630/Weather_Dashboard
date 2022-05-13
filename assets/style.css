@@ -1,0 +1,74 @@
+header {
+    border: solid 5px purple;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.searchandtheme {
+    border: solid 5px purple;
+    display: flex;
+    justify-content: space-around;
+}
+
+.searchbar {
+    border: solid 5px purple;
+    margin: 5px;
+}
+
+.themeselect {
+    border: solid 5px purple;
+    margin: 5px;
+}
+
+.history {
+    border: solid 5px purple;
+    width: 80%;
+    margin: auto;
+    margin-top: 10px;
+    padding: 20px;
+}
+
+.historybuttons label{
+    height: 50px;
+    width: 400px;
+    border: solid 5px purple;
+    margin: 5px;
+    padding: 5px;
+}
+
+.maincard {
+    border: solid 5px purple;
+    margin: auto;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    margin-top: 10px;
+}
+
+.currentweather {
+    border: solid 5px purple;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.randomfact {
+    border: solid 5px purple;
+    margin: 5px;
+}
+
+.forecast {
+    border: solid 5px purple;
+    margin: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.forecard {
+    border: solid 5px purple;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+}
