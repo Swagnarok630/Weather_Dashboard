@@ -1,3 +1,7 @@
+* {
+    background-color: lemonchiffon;
+}
+
 header {
     border: solid 5px purple;
     text-align: center;
