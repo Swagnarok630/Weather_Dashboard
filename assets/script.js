@@ -1,6 +1,14 @@
+// Variable and script to save/load current theme so that site doesn't refresh theme each refresh
+const currenttheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : null;
+if (currenttheme) {
+    document.documentElement.setAttribute("data-theme", currenttheme);
+}
+
 // API variables
 var weatherAPIbaseURL = "https://api.openweathermap.org";
 var weatherAPIkey = "94ebea31571843c6c5e0f41fe628959f";
+var futuramaAPI = "https://futuramaapi.herokuapp.com/api/quotes?search";
+var catimgAPI = "https://api.thecatapi.com/v1/images/search";
 
 // Global variables
 var search = document.querySelector("#search");
@@ -30,24 +38,28 @@ twilight.addEventListener("click", twilighttheme)
 function defaulttheme() {
     if (defaultcheck.checked === true) {
         document.documentElement.setAttribute("data-theme", "default")
+        localStorage.setItem("theme", "default")
     }
 }
 
 function midnighttheme() {
     if (midnightcheck.checked === true) {
         document.documentElement.setAttribute("data-theme", "midnight")
+        localStorage.setItem("theme", "midnight")
     }
 }
 
 function daylighttheme() {
     if (daylightcheck.checked === true) {
         document.documentElement.setAttribute("data-theme", "daylight")
+        localStorage.setItem("theme", "daylight")
     }
 }
 
 function twilighttheme() {
     if (twilightcheck.checked === true) {
         document.documentElement.setAttribute("data-theme", "twilight")
+        localStorage.setItem("theme", "twilight")
     }
 }
 
@@ -141,6 +153,7 @@ function historyclick(event) {
 }
 
 
+
 // Function to take user's city input and convert to raw data to grab latitude and longitude
 function convert(input) {
     var geocode = `${weatherAPIbaseURL}/geo/1.0/direct?q=${input}&limit=5&appid=${weatherAPIkey}`;
@@ -155,6 +168,9 @@ function convert(input) {
             historylog(input);
             weather(geodata);
         })
+        .catch(function (error) {
+            console.error(error);
+        });
 }
 
 // Function to take latitude and longitude data from geocode and make another request to grab weather data at that location
@@ -174,8 +190,14 @@ function weather(geodata) {
             // Take data from fetch and create weather cards for current day and forecast
             currentcard(city, weatherdata);
             futurecards(city, weatherdata);
+            render();
         })
+        .catch(function (error) {
+            console.error(error);
+        });
 }
+
+
 
 // Function to create present day weather card for current search city
 function currentcard(city, weatherdata) {
@@ -265,3 +287,70 @@ function futurecards(city, weatherdata) {
         future.append(datetext, conditiontext, temptext, humidtext, windtext);
     }
 }
+
+
+function render() {
+    var randomcard = document.createElement("div");
+    randomcard.setAttribute("class", "randomstuff");
+    main.append(randomcard);
+    futurama()
+    cat()
+
+    function futurama() {
+        fetch(futuramaAPI)
+            .then(function (response1) {
+                return response1.json();
+            })
+            .then(function (quote) {
+                console.log(quote);
+                renderquote(quote);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+        function renderquote(quote) {
+            var r = Math.floor(Math.random() * 20)
+            var fquote = quote[r].quote
+            var fchar = quote[r].character
+        
+            var fquotetext = document.createElement("p");
+            var fchartext = document.createElement("p");
+        
+            fquotetext.setAttribute("class", "quote")
+            fchartext.setAttribute("class", "char")
+            fquotetext.textContent = `"${fquote}"`;
+            fchartext.textContent = fchar;
+        
+            randomcard.append(fquotetext, fchartext)
+        }
+    }
+
+    function cat() {
+        fetch(catimgAPI)
+            .then(function (response2) {
+                return response2.json();
+            })
+            .then(function (image) {
+                console.log(image);
+                renderimage(image);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+        function renderimage(image) {
+            var catimg = image[0].url
+            var catdes = "Random cat picture"
+        
+            var randomcat = document.createElement("img")
+            randomcat.setAttribute("src", catimg);
+            randomcat.setAttribute("alt", catdes);
+            randomcat.setAttribute("width", "60%");
+            randomcat.setAttribute("height", "60%")
+        
+            randomcard.append(randomcat)
+        }
+    }
+}
+
+
+
