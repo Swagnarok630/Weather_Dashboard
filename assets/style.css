@@ -1,11 +1,44 @@
+:root {
+    --bg-color: #38343D;
+    --text: #FDECEF;
+    --gradient: linear-gradient(to bottom left, #453750, #A393BF);
+    --border: #453750;
+}
+
+[data-theme="midnight"] {
+    --bg-color: #0F8693;
+    --text: #FDECEF;
+    --gradient: linear-gradient(to bottom left, #4859F1, #8093F1);
+    --border: #0B132B;
+}
+
+[data-theme="daylight"] {
+    --bg-color: #DBD053;
+    --text: #030206;
+    --gradient: linear-gradient(to bottom left, #F1BA21, #FFE9A8);
+    --border: #DBD053;
+}
+
+[data-theme="twilight"] {
+    --bg-color: #820027;
+    --text: #030206;
+    --gradient: linear-gradient(to bottom left, #F52121, #FDADAD);
+    --border: #580000;
+}
+
 * {
-    background-color: lemonchiffon;
+    background-color: var(--bg-color);
+    color: var(--text);
 }
 
 header {
-    border: solid 5px purple;
+    border: solid 3px var(--border);
+    background-image: var(--gradient);
     text-align: center;
+    font-size: 50px;
+    font-weight: bold;
     margin-bottom: 15px;
+    padding: 20px;
 }
 
 .searchandtheme {
@@ -22,6 +55,43 @@ header {
 .themeselect {
     border: solid 5px purple;
     margin: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.themeselect input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.themeselect label {
+    display: inline-block;
+    font-size: 22px;
+    padding: 15px;
+    border-radius: 25px;
+}
+
+.themeselect label.default {
+    background-color: #73648A;
+    border: solid 3px #453750;
+}
+
+.themeselect label.midnight {
+    background-color: #8093F1;
+    border: solid 3px #0B132B;
+}
+
+.themeselect label.daylight {
+    background-color: #F5D740;
+    border: solid 3px #F1BA21;
+}
+
+.themeselect label.twilight {
+    background-color: #F52121;
+    border: solid 3px #93032E;
 }
 
 .history {

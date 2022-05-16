@@ -10,6 +10,48 @@ var forecast = document.querySelector(".forecast");
 var pastcontainer = document.querySelector(".history");
 var searchhistory = [];
 
+// Theme variables for radio input and for label as buttons
+var defaultcheck = document.querySelector("#default")
+var midnightcheck = document.querySelector("#P3")
+var daylightcheck = document.querySelector("#P4")
+var twilightcheck = document.querySelector("#P5")
+var defaultinput = document.querySelector(".default")
+var midnight = document.querySelector(".midnight");
+var daylight = document.querySelector(".daylight");
+var twilight = document.querySelector(".twilight");
+
+// Event listeners for label buttons
+defaultinput.addEventListener("click", defaulttheme)
+midnight.addEventListener("click", midnighttheme)
+daylight.addEventListener("click", daylighttheme)
+twilight.addEventListener("click", twilighttheme)
+
+// Functions to change themes upon button click
+function defaulttheme() {
+    if (defaultcheck.checked === true) {
+        document.documentElement.setAttribute("data-theme", "default")
+    }
+}
+
+function midnighttheme() {
+    if (midnightcheck.checked === true) {
+        document.documentElement.setAttribute("data-theme", "midnight")
+    }
+}
+
+function daylighttheme() {
+    if (daylightcheck.checked === true) {
+        document.documentElement.setAttribute("data-theme", "daylight")
+    }
+}
+
+function twilighttheme() {
+    if (twilightcheck.checked === true) {
+        document.documentElement.setAttribute("data-theme", "twilight")
+    }
+}
+
+
 // Run to initialize any history buttons for local storage
 historyinitial()
 
