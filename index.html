@@ -27,6 +27,19 @@
             </form>
         </div>
 
+        <div class="clear">
+            <button id="clearbutton" onclick="clearhistory();">Clear History</button>
+        </div>
+
+        <div class="unitswitch">
+            °F
+            <label class="units" for="unitstoggle">
+            <input type="checkbox" id="unitstoggle">
+            <div class="slider"></div>
+            </label>
+            °C
+        </div>
+
         <!-- Theme selector buttons -->
         <div class="themeselect">
             <input type="radio" id="default" name="default" onchange="defaulttheme()" value="default">

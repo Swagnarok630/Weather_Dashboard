@@ -4,6 +4,10 @@
     --gradient: linear-gradient(to bottom left, #453750, #A393BF);
     --border: #9882AC;
     --button: #73648A;
+    --toggle: #453750;
+    --toggle-bg-1: #A393BF;
+    --toggle-bg-2: #73648A;
+
 }
 
 [data-theme="midnight"] {
@@ -12,6 +16,9 @@
     --gradient: linear-gradient(to bottom left, #4859F1, #8093F1);
     --border: #8DBDBD;
     --button: #8093F1;
+    --toggle: #8DBDBD;
+    --toggle-bg-1: #8093F1;
+    --toggle-bg-2: #002595;
 }
 
 [data-theme="daylight"] {
@@ -20,6 +27,9 @@
     --gradient: linear-gradient(to bottom left, #CEBE0E, #FFE9A8);
     --border: #FFE9A8;
     --button: #E9E189;
+    --toggle: #FFE9A8;
+    --toggle-bg-1: #FAB565;
+    --toggle-bg-2: #EE8514;
 }
 
 [data-theme="twilight"] {
@@ -28,6 +38,9 @@
     --gradient: linear-gradient(to bottom left, #F52121, #FDADAD);
     --border: #580000;
     --button: #E24F7C;
+    --toggle: #7F0000;
+    --toggle-bg-1: #FDADAD;
+    --toggle-bg-2: #F52121;
 }
 
 * {
@@ -46,7 +59,6 @@ header {
 }
 
 .searchandtheme {
-    /* border: solid 5px purple; */
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -73,6 +85,72 @@ header {
     padding: 10px;
     border-radius: 25px;
 }
+
+.clear {
+    border: solid 3px var(--border);
+    margin: 10px;
+    padding: 10px;
+} 
+
+button#clearbutton {
+    background-color: var(--button);
+    border: none;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.unitswitch {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+}
+
+.units {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 54px;
+    margin: 10px;
+}
+  
+.units input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.slider {
+    background-color: var(--toggle-bg-1);
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+  
+.slider:before {
+    background-color: var(--toggle);
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+}
+  
+input:checked + .slider {
+    background-color: var(--toggle-bg-2);
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(19px);
+    -ms-transform: translateX(19px);
+    transform: translateX(19px);
+  }
 
 .themeselect {
     border: solid 3px var(--border);
@@ -122,11 +200,9 @@ header {
 }
 
 .history {
-    /* border: solid 5px purple; */
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-between;
     width: 85%;
     margin: auto;
     margin-top: 10px;
@@ -136,7 +212,6 @@ header {
 .buttonhistory{
     height: 50px;
     width: 300px;
-    /* flex: 0 0 300px; */
     font-size: 18px;
     border: solid 3px var(--border);
     background-color: var(--button);
@@ -160,7 +235,9 @@ header {
     margin: 5px;
     padding: 10px;
     display: flex;
+    height: 300px;
     flex-direction: column;
+    border-radius: 25px 10px 25px 10px;
 }
 
 .currentweather h2 {
@@ -184,9 +261,46 @@ header {
     background: rgba(0, 0, 0, 0);
 }
 
-.currentweather label {
-    margin: 5px 0px 5px 0px;
-    background: rgba(0, 0, 0, 0);
+.currentweather label.gucci {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    background-color: #0D530B;
+    border: solid 5px black;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bolder;
+    color: white;
+}
+
+.currentweather label.uh-oh {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    background-color: #F5D740;
+    border: solid 5px black;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bolder;
+    color: black;
+}
+
+.currentweather label.oh-no {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    background-color: #E40B0B;
+    border: solid 5px black;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bolder;
+    color: white;
 }
 
 .randomstuff {
@@ -198,6 +312,7 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    border-radius: 25px 10px 25px 10px;
 }
 
 .randomstuff img {
@@ -223,7 +338,6 @@ header {
 }
 
 .forecast {
-    /* border: solid 5px purple; */
     margin: 5px;
     padding: 10px;
     display: flex;
@@ -238,6 +352,7 @@ header {
     padding: 10px;
     display: flex;
     flex-direction: column;
+    border-radius: 25px 10px 25px 10px;
 }
 
 .forecard img {

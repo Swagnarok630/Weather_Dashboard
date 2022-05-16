@@ -17,6 +17,7 @@ var main = document.querySelector(".maincard") ;
 var forecast = document.querySelector(".forecast");
 var pastcontainer = document.querySelector(".history");
 var searchhistory = [];
+var unitstoggle = document.querySelector("#unitstoggle")
 
 // Theme variables for radio input and for label as buttons
 var defaultcheck = document.querySelector("#default")
@@ -63,6 +64,14 @@ function twilighttheme() {
     }
 }
 
+function clearhistory() {
+    console.log(searchhistory)
+    window.localStorage.clear();
+    pastcontainer.innerHTML = "";
+    console.log(searchhistory)
+}
+
+
 
 // Run to initialize any history buttons for local storage
 historyinitial()
@@ -84,6 +93,7 @@ function cityinput(event) {
     event.preventDefault();
     // Take user input and run into API fetch
     convert(input);
+    historylog(input);
     // Empty out form once search is conducted
     userinput.value = "";
     // console.log(input);
@@ -165,7 +175,7 @@ function convert(input) {
         .then(function (geodata) {
             // console.log(geodata);
             // Push to history list and perform next API search
-            historylog(input);
+            // historylog(input);
             weather(geodata);
         })
         .catch(function (error) {
@@ -175,10 +185,17 @@ function convert(input) {
 
 // Function to take latitude and longitude data from geocode and make another request to grab weather data at that location
 function weather(geodata) {
+    // console.log(unitstoggle.checked)
     var lat = geodata[0].lat;
     var lon = geodata[0].lon;
     var city = geodata[0].name;
+
+    if (unitstoggle.checked === false) {
     var weather = `${weatherAPIbaseURL}/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely,hourly&appid=${weatherAPIkey}`;
+    }
+    else {
+    var weather = `${weatherAPIbaseURL}/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely,hourly&appid=${weatherAPIkey}`;
+    }
 
     fetch(weather)
         .then(function (response) {
@@ -220,21 +237,37 @@ function currentcard(city, weatherdata) {
     var temptext = document.createElement("p");
     var humidtext = document.createElement("p");
     var windtext = document.createElement("p");
-    var uvtext = document.createElement("label");
+    var uvtext = document.createElement("p");
+    var uvnum = document.createElement("label")
 
     // Deleting previous cards and attaching current card to main section on html and add class attribute to style
     current.setAttribute("class", "currentweather");
     main.innerHTML = "";
     main.append(current);
 
+    if (uv < 3) {
+        uvnum.classList.add("gucci");
+      } else if (uv < 7) {
+        uvnum.classList.add("uh-oh");
+      } else {
+        uvnum.classList.add("oh-no");
+      }
+
     // Adding data to elements
     citytext.textContent = city;
     datetext.textContent = date;
     conditiontext.textContent = "Conditions: " + condition;
-    temptext.textContent = "Temperature: " + temp + " °F";
     humidtext.textContent = "Humidity: " + humidity + "%";
-    windtext.textContent = "Wind Speed: " + wind + " MPH";
-    uvtext.textContent = "UV Index: " + uv;
+    uvtext.textContent = "UV Index:";
+    uvnum.textContent = uv
+    if (unitstoggle.checked === false) {
+        temptext.textContent = "Temperature: " + temp + " °F";
+        windtext.textContent = "Wind Speed: " + wind + " MPH";
+    }
+    else {
+        temptext.textContent = "Temperature: " + temp + " °C";
+        windtext.textContent = "Wind Speed: " + wind + " M/S";
+    }
 
     // Adding icon to citytext
     iconimg.setAttribute("src", icon);
@@ -242,7 +275,7 @@ function currentcard(city, weatherdata) {
     citytext.append(iconimg);
 
     // Adding current elements to card
-    current.append(citytext, datetext, conditiontext, temptext, humidtext, windtext, uvtext);
+    current.append(citytext, datetext, conditiontext, temptext, humidtext, windtext, uvtext, uvnum);
 }
 
 function futurecards(city, weatherdata) {
@@ -274,9 +307,15 @@ function futurecards(city, weatherdata) {
         // Adding data to elements
         datetext.textContent = date;
         conditiontext.textContent = "Conditions: " + condition;
-        temptext.textContent = "Temperature: " + temp + " °F";
         humidtext.textContent = "Humidity: " + humid + "%";
-        windtext.textContent = "Wind Speed: " + wind + " MPH";
+        if (unitstoggle.checked === false) {
+            temptext.textContent = "Temperature: " + temp + " °F";
+            windtext.textContent = "Wind Speed: " + wind + " MPH";
+        }
+        else {
+            temptext.textContent = "Temperature: " + temp + " °C";
+            windtext.textContent = "Wind Speed: " + wind + " M/S";
+        }
 
         // Adding icon to citytext
         iconimg.setAttribute("src", icon);
@@ -302,7 +341,7 @@ function render() {
                 return response1.json();
             })
             .then(function (quote) {
-                console.log(quote);
+                // console.log(quote);
                 renderquote(quote);
             })
             .catch(function (error) {
@@ -331,7 +370,7 @@ function render() {
                 return response2.json();
             })
             .then(function (image) {
-                console.log(image);
+                // console.log(image);
                 renderimage(image);
             })
             .catch(function (error) {
