@@ -65,10 +65,8 @@ function twilighttheme() {
 }
 
 function clearhistory() {
-    console.log(searchhistory)
-    window.localStorage.clear();
-    pastcontainer.innerHTML = "";
-    console.log(searchhistory)
+    localStorage.clear();
+    location.reload();
 }
 
 
