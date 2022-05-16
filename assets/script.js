@@ -65,7 +65,7 @@ function twilighttheme() {
 }
 
 function clearhistory() {
-    localStorage.clear();
+    localStorage.removeItem("searchhistory")
     location.reload();
 }
 
