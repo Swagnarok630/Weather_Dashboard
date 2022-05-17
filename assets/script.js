@@ -18,6 +18,7 @@ var forecast = document.querySelector(".forecast");
 var pastcontainer = document.querySelector(".history");
 var searchhistory = [];
 var unitstoggle = document.querySelector("#unitstoggle")
+var clearbutton = document.querySelector("#clearbutton")
 
 // Theme variables for radio input and for label as buttons
 var defaultcheck = document.querySelector("#default")
@@ -42,21 +43,18 @@ function defaulttheme() {
         localStorage.setItem("theme", "default")
     }
 }
-
 function midnighttheme() {
     if (midnightcheck.checked === true) {
         document.documentElement.setAttribute("data-theme", "midnight")
         localStorage.setItem("theme", "midnight")
     }
 }
-
 function daylighttheme() {
     if (daylightcheck.checked === true) {
         document.documentElement.setAttribute("data-theme", "daylight")
         localStorage.setItem("theme", "daylight")
     }
 }
-
 function twilighttheme() {
     if (twilightcheck.checked === true) {
         document.documentElement.setAttribute("data-theme", "twilight")
@@ -64,17 +62,22 @@ function twilighttheme() {
     }
 }
 
+// Event listener for clear history button
+clearbutton.addEventListener("click", clearhistory)
+
+// Function to remove each item in history and empty out HTML element
 function clearhistory() {
-    localStorage.removeItem("searchhistory")
-    location.reload();
+    // console.log(searchhistory)
+    var h = searchhistory.length
+    searchhistory.splice(0,h);
+    // console.log(searchhistory)
+    pastcontainer.innerHTML = "";
 }
-
-
 
 // Run to initialize any history buttons for local storage
 historyinitial()
 
-// Search button and history buttons
+// Event listeners for search button and history buttons
 search.addEventListener("submit", cityinput);
 pastcontainer.addEventListener("click", historyclick);
 
@@ -124,6 +127,7 @@ function historybuttons() {
     // Clear section and re-initialize with search history
     pastcontainer.innerHTML = "";
 
+    // Loop to create button for every item in the history list
     for (var i = searchhistory.length - 1; i >= 0; i--) {
         var button = document.createElement("button");
         button.setAttribute("type", "button");
@@ -160,9 +164,7 @@ function historyclick(event) {
     convert(input);
 }
 
-
-
-// Function to take user's city input and convert to raw data to grab latitude and longitude
+// Function to take user's city input and converts to raw data to grab latitude and longitude
 function convert(input) {
     var geocode = `${weatherAPIbaseURL}/geo/1.0/direct?q=${input}&limit=5&appid=${weatherAPIkey}`;
 
@@ -172,8 +174,7 @@ function convert(input) {
         })
         .then(function (geodata) {
             // console.log(geodata);
-            // Push to history list and perform next API search
-            // historylog(input);
+            // Take latitude and longitude data and fetch weather data
             weather(geodata);
         })
         .catch(function (error) {
@@ -188,6 +189,7 @@ function weather(geodata) {
     var lon = geodata[0].lon;
     var city = geodata[0].name;
 
+    // Conditional to check if fetch should be made in imperial units or metric units
     if (unitstoggle.checked === false) {
     var weather = `${weatherAPIbaseURL}/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely,hourly&appid=${weatherAPIkey}`;
     }
@@ -205,14 +207,13 @@ function weather(geodata) {
             // Take data from fetch and create weather cards for current day and forecast
             currentcard(city, weatherdata);
             futurecards(city, weatherdata);
+            // Creating random card to go with weather card
             render();
         })
         .catch(function (error) {
             console.error(error);
         });
 }
-
-
 
 // Function to create present day weather card for current search city
 function currentcard(city, weatherdata) {
@@ -243,6 +244,7 @@ function currentcard(city, weatherdata) {
     main.innerHTML = "";
     main.append(current);
 
+    // Conditional to help style the element for UV index 
     if (uv < 3) {
         uvnum.classList.add("gucci");
       } else if (uv < 7) {
@@ -258,6 +260,7 @@ function currentcard(city, weatherdata) {
     humidtext.textContent = "Humidity: " + humidity + "%";
     uvtext.textContent = "UV Index:";
     uvnum.textContent = uv
+    // Conditional to change text depending on what units of measure was searched with
     if (unitstoggle.checked === false) {
         temptext.textContent = "Temperature: " + temp + " °F";
         windtext.textContent = "Wind Speed: " + wind + " MPH";
@@ -276,6 +279,7 @@ function currentcard(city, weatherdata) {
     current.append(citytext, datetext, conditiontext, temptext, humidtext, windtext, uvtext, uvnum);
 }
 
+// Function to create cards for a 5-day forecast for the current city searched
 function futurecards(city, weatherdata) {
     // Needs to be outside of loop to clear 5-day forecast or it'd delete itself per day
     forecast.innerHTML = "";
@@ -306,6 +310,7 @@ function futurecards(city, weatherdata) {
         datetext.textContent = date;
         conditiontext.textContent = "Conditions: " + condition;
         humidtext.textContent = "Humidity: " + humid + "%";
+        // Conditional to change text depending on what units of measure was searched with
         if (unitstoggle.checked === false) {
             temptext.textContent = "Temperature: " + temp + " °F";
             windtext.textContent = "Wind Speed: " + wind + " MPH";
@@ -325,7 +330,7 @@ function futurecards(city, weatherdata) {
     }
 }
 
-
+// Function to generate random Futurama quote and random cat picture to add alongside weather card
 function render() {
     var randomcard = document.createElement("div");
     randomcard.setAttribute("class", "randomstuff");
@@ -333,6 +338,7 @@ function render() {
     futurama()
     cat()
 
+    // Fetch from Futurama API to grab a quote and speaker
     function futurama() {
         fetch(futuramaAPI)
             .then(function (response1) {
@@ -345,6 +351,7 @@ function render() {
             .catch(function (error) {
                 console.error(error);
             });
+        // Function to randomly grab a quote, create elements and append to random card 
         function renderquote(quote) {
             var r = Math.floor(Math.random() * 20)
             var fquote = quote[r].quote
@@ -361,7 +368,7 @@ function render() {
             randomcard.append(fquotetext, fchartext)
         }
     }
-
+    // Fetch from cat API to grab a random image
     function cat() {
         fetch(catimgAPI)
             .then(function (response2) {
@@ -374,6 +381,7 @@ function render() {
             .catch(function (error) {
                 console.error(error);
             });
+        // Function to create elements and append random image to the random card
         function renderimage(image) {
             var catimg = image[0].url
             var catdes = "Random cat picture"
@@ -388,6 +396,3 @@ function render() {
         }
     }
 }
-
-
-
