@@ -68,7 +68,8 @@ clearbutton.addEventListener("click", clearhistory)
 // Function to remove each item in history and empty out HTML element
 function clearhistory() {
     // console.log(searchhistory)
-    var h = searchhistory.length
+    localStorage.removeItem("searchhistory");
+    var h = searchhistory.length;
     searchhistory.splice(0,h);
     // console.log(searchhistory)
     pastcontainer.innerHTML = "";
