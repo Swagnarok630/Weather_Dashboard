@@ -28,19 +28,19 @@ Weather Dashboard deployed [here](https://swagnarok630.github.io/Weather_Dashboa
     * Wind Speed
 * Cities listed in the history list can be clicked on to pull data again
 
-![Insert image of Weather Dashboard in action]()
+![Weather Dashboard in action](weatherapp.gif)
 
 ## Bonus Features
 
 * Multiple theme buttons to change the look of the dashboard. Themes set will persist through page refresh
-  * ![Insert image of themes in action]()
+  * ![Themes in action](weatherthemes.gif)
 * A button to clear the search history. Dynamically deletes history without refreshing page
-  * ![Insert image of clear button in action]()
+  * ![Clear button in action](weatherclear.gif)
 * Imperial vs Metric units toggle, when set, will define the units that the data will fetch
-  * ![Insert image of toggle in action]()
+  * ![Toggle in action](weatherunits.gif)
 * Random Futurama quote to be attached to every weather search, just for fun
 * Random cat picture to be attached to every weather search, just for fun
-  * ![Insert image of random card in action]() 
+  * ![Random card in action](weatherrandom.gif) 
 
 ## Notes
 Most of the features and goals for this app have been achieved. Only a couple of possible future features come to mind
